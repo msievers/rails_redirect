@@ -8,13 +8,22 @@ class RailsRedirect
     attr_accessor :transformation
 
     def initialize(hash)
-      @selector = hash.keys.first
+      @selector =
+      if hash.keys.first.start_with?("/") && hash.keys.first.end_with?("/")
+        Regexp.compile(hash.keys.first[1..-2])
+      else
+        Regexp.compile(hash.keys.first)
+      end
       
       transformation_definition =
       if hash.values.first.is_a?(Array)
         hash.values.first
       else
         [hash.values.first]
+      end
+
+      if transformation_definition[0].strip.start_with?("->")
+        transformation_definition[0] = eval(transformation_definition[0])
       end
 
       @transformation = Rule::Transformation.new(
@@ -39,9 +48,7 @@ class RailsRedirect
     end
 
     def match?(path)
-      if @selector.is_a?(String)
-        path == @selector
-      elsif @selector.is_a?(Regexp)
+      if @selector.is_a?(Regexp)
         !!path[@selector]
       elsif @selector.respond_to?(:call)
         !!@selector.call(path)

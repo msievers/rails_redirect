@@ -1,6 +1,13 @@
 default: &default
   rules:
-  - !ruby/regexp /\/foo\/?\Z/: '/bar'
+  - /\/de\/collections\/?\Z/: "/de/sammlungen"
+  - /\/de\/collections\/(?<id>[^\/]+)\Z/: "/de/sammlungen/\\k<id>"
+  - /\/de\/sammlungen\/?\Z/: "/de/specials"
+  - /\/de\/sammlungen\/(?<id>[^\/]+)\Z/: "/de/specials/\\k<id>"
+  - /[^\/]+\/collections\Z/: |
+      -> (url) do
+        "/foo/bar"
+      end
 
 development:
   <<: *default

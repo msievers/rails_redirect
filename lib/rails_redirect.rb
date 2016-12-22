@@ -18,7 +18,6 @@ class RailsRedirect
     end
 
     if url != original_url
-      binding.pry
       [
         status, {
           "Content-Type" => "text/html; charset=utf-8",
