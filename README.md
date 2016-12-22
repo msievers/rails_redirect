@@ -45,9 +45,9 @@ rules:
 - /\/foos/(?<id>\d+)\Z/: "/muffs/\\k<id>" # redirects /foos/17 to /muffs/17
 ```
 
-### Supports lambdas/procs
+### Supports callables
 
-If regular expressions are not sufficient you can also use *lambdas/procs*.
+If regular expressions are not sufficient you can also use a *lambda* or a *proc*.
 
 ```yaml
 rules:
@@ -62,16 +62,13 @@ rules:
 
 In your rails app, create `config/rails_redirect.yml` and set it up.
 
-## Examples
+## Example
 
 ```yaml
 # config/rails_redirect.yml
 default: &default
   rules:
-  # redirect urls which end with "/de/collections" to "/de/sammlungen
   - /\/de\/collections\/?\Z/: "/de/sammlungen"
-  
-  # redirect urls like "/de/collections/foo" to "/de/sammlungen/foo
   - /\/de\/collections\/(?<id>[^\/]+)\Z/: "/de/sammlungen/\\k<id>"
   - /\/de\/sammlungen\/?\Z/: "/de/specials"
   - /\/de\/sammlungen\/(?<id>[^\/]+)\Z/: "/de/specials/\\k<id>"
