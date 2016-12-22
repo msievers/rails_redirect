@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+require "benchmark/ips"
+require "rails_redirect"
+
+Benchmark.ips do |x|
+  @string = "/foo/"
+  @regexp = /\A\/foo\/?\Z/
+
+  x.report("String#[]") { @string[@regexp] }
+  x.report("Regexp#match") { @regexp.match(@string) }
+
+  x.compare!
+end

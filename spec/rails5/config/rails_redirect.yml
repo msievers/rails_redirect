@@ -1,0 +1,12 @@
+default: &default
+  rules:
+  - !ruby/regexp /\/foo\/?\Z/: '/bar'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

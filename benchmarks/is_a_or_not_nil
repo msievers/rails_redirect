@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+require "benchmark/ips"
+require "rails_redirect"
+
+Benchmark.ips do |x|
+  @foo = "string"
+
+  x.report("Object#is_a?") { @foo.is_a?(String) ? true : false }
+  x.report("Implicite not nil") { @foo ? true : false }
+
+  x.compare!
+end
