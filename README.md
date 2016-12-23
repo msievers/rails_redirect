@@ -51,9 +51,9 @@ If regular expressions are not sufficient you can also use a *lambda* or a *proc
 
 ```yaml
 rules:
-- /\/foos\/?\Z/: -> (url) { "/bars" }
+- /\/foos\/?\Z/: -> (env) { "/bars" }
 - /\/bars\/?\Z/: |                    # multiple lines just work because of YAML
-    -> (url) do
+    -> (env) do
       "/muffs"
     end
 ```
@@ -95,7 +95,7 @@ default: &default
   - /\/de\/sammlungen\/?\Z/: "/de/specials"
   - /\/de\/sammlungen\/(?<id>[^\/]+)\Z/: "/de/specials/\\k<id>"
   - /[^\/]+\/collections\Z/: |
-      -> (url) do
+      -> (env) do
         "/foo/bar"
       end
 
