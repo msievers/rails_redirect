@@ -58,6 +58,28 @@ rules:
     end
 ```
 
+#### `app/redirectors`
+
+If your inline *procs* are getting to complex, we introduce the convention to put the logic into classes in `app/redirectors`. 
+
+```ruby
+# app/redirectors/collections_redirector.rb
+class CollectionsRedirector < RailsRedirect::Redirector
+  def self.call(env)
+    ...
+  end
+end
+```
+
+These redirectors can than be called from within regular config defined *procs* like this.
+
+```yaml
+rules:
+  - /\/foos\/?\Z/: -> (env) { CollectionsRedirector.call(env) }
+```
+
+This is really just a convention. You are totaly free to go this or any other way to store complex redirection logic.
+
 ## Usage
 
 In your rails app, create `config/rails_redirect.yml` and set it up.
